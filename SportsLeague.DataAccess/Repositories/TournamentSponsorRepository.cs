@@ -7,11 +7,13 @@ namespace SportsLeague.DataAccess.Repositories
 {
     public class TournamentSponsorRepository : GenericRepository<TournamentSponsor>, ITournamentSponsorRepository
     {
-        public TournamentSponsorRepository(LeagueDbContext context) : base(context) { }
+        public TournamentSponsorRepository(LeagueDbContext context) : base(context)
+        {
+        }
 
         public async Task<IEnumerable<TournamentSponsor>> GetByTournamentIdAsync(int tournamentId)
         {
-            return await _context.TournamentSponsors
+            return await _dbSet
                 .Include(ts => ts.Sponsor)
                 .Where(ts => ts.TournamentId == tournamentId)
                 .ToListAsync();
@@ -19,17 +21,15 @@ namespace SportsLeague.DataAccess.Repositories
 
         public async Task<IEnumerable<TournamentSponsor>> GetBySponsorIdAsync(int sponsorId)
         {
-            return await _context.TournamentSponsors
+            return await _dbSet
                 .Include(ts => ts.Tournament)
                 .Where(ts => ts.SponsorId == sponsorId)
                 .ToListAsync();
         }
 
-        public async Task<TournamentSponsor?> GetByTournamentAndSponsorIdAsync(int tournamentId, int sponsorId)
+        public async Task<TournamentSponsor?> GetByTournamentAndSponsorAsync(int tournamentId, int sponsorId)
         {
-            return await _context.TournamentSponsors
-                .Include(ts => ts.Tournament)
-                .Include(ts => ts.Sponsor)
+            return await _dbSet
                 .FirstOrDefaultAsync(ts => ts.TournamentId == tournamentId && ts.SponsorId == sponsorId);
         }
     }
