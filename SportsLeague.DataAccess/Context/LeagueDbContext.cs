@@ -19,9 +19,7 @@ namespace SportsLeague.DataAccess.Context
         public DbSet<TournamentSponsor> TournamentSponsors { get; set; }
         public DbSet<Match> Matches => Set<Match>();
         public DbSet<MatchResult> MatchResults => Set<MatchResult>();
-
         public DbSet<Goal> Goals => Set<Goal>();
-
         public DbSet<Card> Cards => Set<Card>();
 
 
