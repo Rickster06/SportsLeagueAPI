@@ -28,6 +28,7 @@ builder.Services.AddScoped<IMatchResultRepository, MatchResultRepository>();
 builder.Services.AddScoped<IGoalRepository, GoalRepository>();
 builder.Services.AddScoped<ICardRepository, CardRepository>();
 builder.Services.AddScoped<IMatchRepository, MatchRepository>();
+builder.Services.AddScoped<IMatchService, MatchService>();
 
 // ── Services ──
 builder.Services.AddScoped<ITeamService, TeamService>();
@@ -37,6 +38,7 @@ builder.Services.AddScoped<ITournamentService, TournamentService>();
 builder.Services.AddScoped<ISponsorService, SponsorService>();
 builder.Services.AddScoped<IMatchEventService, MatchEventService>();
 builder.Services.AddScoped<MatchValidationHelper>();
+builder.Services.AddScoped<IStandingsService, StandingsService>();
 
 // ── AutoMapper ──
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
@@ -55,11 +57,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
-
-// ── Repositories (agregar) ── 
-
-builder.Services.AddScoped<IMatchRepository, MatchRepository>();
+};
 
 // ── Data Seeder ── 
 
@@ -78,10 +76,6 @@ using (var scope = app.Services.CreateScope())
     await DataSeeder.SeedAsync(context);
 
 }
-
-// ── Services (agregar) ── 
-
-builder.Services.AddScoped<IMatchService, MatchService>();
 
 app.MapGet("/", () => Results.Redirect("/swagger"));
 
