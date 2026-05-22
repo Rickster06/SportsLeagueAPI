@@ -18,8 +18,6 @@ public class MatchValidationHelper
 
     private readonly IPlayerRepository _playerRepository;
 
-
-
     public MatchValidationHelper(
 
         IMatchRepository matchRepository,
